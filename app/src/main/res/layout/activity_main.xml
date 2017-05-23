@@ -27,11 +27,12 @@
             android:orientation="vertical">
             <!-- toolbar -->
             <com.xuyonghong.yonhomgallery.view.ThemeableToolBar
-                android:id="@+id/toolbar"
+                android:id="@+id/my_tool_bar"
                 style="@style/MyToolbarStyle"/>
 
             <!-- content -->
             <FrameLayout
+                android:id="@+id/album_fragment_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
