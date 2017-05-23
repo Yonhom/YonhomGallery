@@ -1,11 +1,26 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Base application theme: remove the default action bar -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
+    <!-- my themeabe toolbar's configuration property -->
+    <style name="MyToolbarStyle" parent="Widget.AppCompat.Toolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:elevation" >5dp</item>
+        <item name="android:theme">@style/MyToolbarTheme</item>
+    </style>
+    <style name="MyToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:colorControlHighlight">#FFF</item>
+        <item name="android:colorControlNormal">#FFF</item>
+    </style>
+
+
 
 </resources>

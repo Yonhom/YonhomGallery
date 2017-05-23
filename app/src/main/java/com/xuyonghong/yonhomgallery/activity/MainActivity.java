@@ -1,7 +1,9 @@
-package com.xuyonghong.yonhomgallery;
+package com.xuyonghong.yonhomgallery.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.xuyonghong.yonhomgallery.R;
 
 public class MainActivity extends AppCompatActivity {
 

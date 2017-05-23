@@ -20,9 +20,25 @@
         android:id="@+id/contentView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!-- toolbar -->
 
-        <!-- content -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <!-- toolbar -->
+            <com.xuyonghong.yonhomgallery.view.ThemeableToolBar
+                android:id="@+id/toolbar"
+                style="@style/MyToolbarStyle"/>
+
+            <!-- content -->
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+
+        </LinearLayout>
+
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="wrap_content"
