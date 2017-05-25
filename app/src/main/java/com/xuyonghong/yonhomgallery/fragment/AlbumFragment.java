@@ -12,9 +12,12 @@ import android.view.ViewGroup;
 
 import com.xuyonghong.yonhomgallery.R;
 import com.xuyonghong.yonhomgallery.adapter.AlbumsAdapter;
+import com.xuyonghong.yonhomgallery.util.MediaManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by xuyonghong on 2017/5/23.
@@ -24,6 +27,8 @@ public class AlbumFragment extends Fragment {
 
     @BindView(R.id.swipe_refresh) SwipeRefreshLayout swipeRefresh;
     @BindView(R.id.ablums_recycler_view) RecyclerView albumsView;
+
+    private AlbumsAdapter albumsAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -37,11 +42,30 @@ public class AlbumFragment extends Fragment {
         View view = inflater.inflate(R.layout.album_fragment, null);
         ButterKnife.bind(this, view);
 
-        albumsView.setAdapter(new AlbumsAdapter());
+        albumsAdapter = new AlbumsAdapter();
+        albumsView.setAdapter(albumsAdapter);
         albumsView.setLayoutManager(new GridLayoutManager(getActivity(), 3)); // 默认设置3列
+        
+        displayAlbums();
 
         return view;
 
+    }
+
+    private void displayAlbums() {
+        albumsAdapter.clear();
+
+        //把在io线程获取的图片信息更新到adapter中
+        MediaManager.getImageBucketListWithObservable(getContext())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(imageBucket -> { // onNext subscriber
+                            albumsAdapter.add(imageBucket);
+                        },
+                        error -> {},  // onError subcriber
+                        () -> {  // onComplete subscriber
+
+                });
     }
 
 

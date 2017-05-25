@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import io.reactivex.Observable;
+
 /**
  * 获取媒体内容帮助类
  * Created by xuyonghong on 2017/5/25.
@@ -89,5 +91,26 @@ public class MediaManager {
 
         return tmpList;
     }
-    
+
+    /**
+     * 使用RXJava获取图片库中的图集（注意把线程调到io线程）
+     * @param context
+     * @return
+     */
+    public static Observable<ImageBucket> getImageBucketListWithObservable(Context context) {
+        Observable<ImageBucket> observable = Observable.create(bucketEmitter -> {
+            try {
+                List<ImageBucket> imageBucketList = getImageBucketList(context);
+                Iterator<ImageBucket> iterator = imageBucketList.iterator();
+                while (iterator.hasNext()) {
+                    bucketEmitter.onNext(iterator.next());
+                }
+                bucketEmitter.onComplete();
+            } catch (Exception e) {
+                bucketEmitter.onError(e);
+            }
+        });
+
+        return observable;
+    }
 }
