@@ -30,6 +30,8 @@ public class AlbumFragment extends Fragment {
 
     private AlbumsAdapter albumsAdapter;
 
+    public static int recycler_view_columns_count = 3;
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +46,7 @@ public class AlbumFragment extends Fragment {
 
         albumsAdapter = new AlbumsAdapter();
         albumsView.setAdapter(albumsAdapter);
-        albumsView.setLayoutManager(new GridLayoutManager(getActivity(), 3)); // 默认设置3列
+        albumsView.setLayoutManager(new GridLayoutManager(getActivity(), recycler_view_columns_count)); // 默认设置3列
         
         displayAlbums();
 

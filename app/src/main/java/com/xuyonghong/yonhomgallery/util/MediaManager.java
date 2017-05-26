@@ -43,6 +43,9 @@ public class MediaManager {
         };
 
         // 新建查询 : 按照最后修改的事件倒序排列
+        /*
+         * after this method call, the data will be store in cursor
+         */
         Cursor cursor = context.getContentResolver().query(
                 EXTERNAL_CONTENT_URL,
                 columns, null, null,

@@ -1,19 +1,25 @@
 package com.xuyonghong.yonhomgallery.activity;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import com.xuyonghong.yonhomgallery.R;
 import com.xuyonghong.yonhomgallery.fragment.AlbumFragment;
+import com.xuyonghong.yonhomgallery.util.ViewManager;
 import com.xuyonghong.yonhomgallery.view.ThemeableToolBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String TAG = MainActivity.class.getSimpleName();
     public static final int ALBUM_FRAMGENT_CONTAINER_ID = 100;
 
     /**
@@ -26,6 +32,12 @@ public class MainActivity extends AppCompatActivity {
      */
     @BindView(R.id.album_fragment_container)
     FrameLayout albumFragmentContainer;
+
+    @BindView(R.id.drawer_layout)
+    DrawerLayout drawerLayout;
+
+    private ActionBarDrawerToggle drawerToggle;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +61,34 @@ public class MainActivity extends AppCompatActivity {
 
         // creat & add a album fragment to the main screen
         AlbumFragment albumFragment = new AlbumFragment();
-        loadFragment(albumFragment);
+        ViewManager.loadFragment(this, albumFragment, ALBUM_FRAMGENT_CONTAINER_ID);
+
+        // drawer toggle
+        drawerToggle = new ActionBarDrawerToggle(
+                this, drawerLayout, R.string.drawer_open_desc,
+                R.string.drawer_close_desc) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+                Log.i(TAG, "left drawer closed!");
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                Log.i(TAG, "left drawer opened!");
+            }
+        };
+        // set the drawer toggle listener to the toggle button
+        drawerLayout.addDrawerListener(drawerToggle);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+        drawerToggle.syncState();
     }
 
-    /**
-     * replace the container's child view with the fragment's view
-     * @param albumFragment the fragment to replace the old view
-     */
-    private void loadFragment(AlbumFragment albumFragment) {
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        //noinspection ResourceType
-        fragmentTransaction.replace(ALBUM_FRAMGENT_CONTAINER_ID,
-                albumFragment, AlbumFragment.class.getSimpleName());
-        fragmentTransaction.commit();
+    @Override
+    public void onPostCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onPostCreate(savedInstanceState, persistentState);
+        drawerToggle.syncState();
     }
 }

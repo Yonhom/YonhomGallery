@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme: remove the default action bar -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
@@ -12,7 +12,7 @@
     <style name="MyToolbarStyle" parent="Widget.AppCompat.Toolbar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:elevation" >5dp</item>
+        <item name="android:elevation" tools:ignore="NewApi">5dp</item>
         <item name="android:theme">@style/MyToolbarTheme</item>
     </style>
     <style name="MyToolbarTheme" parent="ThemeOverlay.AppCompat.ActionBar">

@@ -1,6 +1,7 @@
 package com.xuyonghong.yonhomgallery.adapter;
 
-import android.net.Uri;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -28,6 +29,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumViewH
         imageAlbums = new ArrayList<>();
     }
 
+    /**
+     * clear data and update ui
+     */
     public void clear() {
         if (imageAlbums.size() > 0) {
             imageAlbums.clear();
@@ -35,8 +39,13 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumViewH
         }
     }
 
+    /**
+     * add data and update ui
+     * @param imageBucket
+     */
     public void add(ImageBucket imageBucket) {
         imageAlbums.add(imageBucket);
+        notifyDataSetChanged();
     }
 
     @Override
@@ -51,7 +60,9 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.AlbumViewH
     public void onBindViewHolder(AlbumsAdapter.AlbumViewHolder holder, int position) {
         ImageBucket imageBucket = imageAlbums.get(position);
         String imagePath = imageBucket.getImageList().get(0).getImagePath();
-        holder.albumCoverView.setImageURI(Uri.parse(imagePath));
+
+        Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+        holder.albumCoverView.setImageBitmap(bitmap);
     }
 
     @Override

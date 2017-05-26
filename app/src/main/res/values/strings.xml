@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">YonhomGallery</string>
+
+    <string name="drawer_open_desc">Open Navigation Drawer</string>
+    <string name="drawer_close_desc">Close Navigation Drawer</string>
+
 </resources>
